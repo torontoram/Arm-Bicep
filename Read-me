@@ -1,0 +1,42 @@
+az deployment group create \
+  --resource-group YourResourceGroupName \
+  --template-file vm.json \
+  --parameters adminUsername=YourName adminPassword=YourPassword123!
+  
+az deployment group create \
+   --name usenondefaultsku \
+   --resource-group myResourceGroup \
+   --template-file $templateFile \
+   --parameters storageSKU=Standard_GRS storageName={your-unique-name}
+   
+az deployment group create \
+  --resource-group rg-prod-eastus \
+  --template-file azuredeploy.json \
+  --parameters @storage.parameters.prod.json \
+  --query "properties.outputs" \
+  --output json > outputs.json
+
+az deployment group create \
+  --resource-group YourResourceGroupName \
+  --template-file vm.json \
+  --parameters adminUsername=YourName adminPassword=YourPassword123!
+  
+az deployment group create \
+   --name usenondefaultsku \
+   --resource-group myResourceGroup \
+   --template-file $templateFile \
+   --parameters storageSKU=Standard_GRS storageName={your-unique-name}
+
+Run this command to target your production environment:
+az deployment group create \
+  --resource-group rg-prod-eastus \
+  --template-file azuredeploy.json \
+  --parameters @storage.parameters.prod.json \
+  --query "properties.outputs" \
+  --output json > outputs.json
+
+Run this command to target your staging environment:
+az deployment group create \
+  --resource-group rg-staging-eastus \
+  --template-file azuredeploy.json \
+  --parameters @storage.parameters.staging.json
