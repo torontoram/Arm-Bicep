@@ -1,3 +1,26 @@
+az login
+az account set --subscription [SubscriptionID/SubscriptionName]
+
+Create resource group -az cli
+==================================================================
+echo "Enter a project name that is used to generate resource and resource group names:"
+read projectName
+resourceGroupName="${projectName}rg"
+az group create --name $resourceGroupName --location "Central US"
+===================================================================
+echo "Enter the same project name:"
+read projectName
+echo "Enter the template file path and file name:"
+read templateFile
+resourceGroupName="${projectName}rg"
+
+az deployment group create --name DeployLocalTemplate \
+   --resource-group $resourceGroupName \
+   --template-file $templateFile \
+   --parameters projectName=$projectName --verbose
+==================================================================
+
+
 az deployment group create \
   --resource-group YourResourceGroupName \
   --template-file vm.json \
