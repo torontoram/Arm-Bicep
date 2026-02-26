@@ -19,7 +19,15 @@ az deployment group create --name DeployLocalTemplate \
    --template-file $templateFile \
    --parameters projectName=$projectName --verbose
 ==================================================================
-
+To create a Template Spec
+-----------------------------------------------------------------
+az ts create \
+  --name StorageAccountSpec \
+  --version "1.0" \
+  --resource-group rg-shared-templates \
+  --location eastus \
+  --template-file azuredeploy.json
+=================================================================
 
 az deployment group create \
   --resource-group YourResourceGroupName \
