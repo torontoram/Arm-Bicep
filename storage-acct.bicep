@@ -1,17 +1,27 @@
-@description('Storage account name')
 @minLength(3)
 @maxLength(24)
-param storageAccountName string = 'storage${uniqueString(resourceGroup().id)}'
+param storageName string
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2025-06-01' = {
-  name: storageAccountName
-  tags: {
-    displayName: 'storageaccount1'
-  }
-  location: resourceGroup().location
-  kind: 'StorageV2'
+@allowed([
+  'Standard_LRS'
+  'Standard_GRS'
+  'Standard_RAGRS'
+  'Standard_ZRS'
+  'Premium_LRS'
+  'Premium_ZRS'
+  'Standard_GZRS'
+  'Standard_RAGZRS'
+])
+param storageSKU string = 'Standard_LRS'
+
+resource storage 'Microsoft.Storage/storageAccounts@2025-06-01' = {
+  name: storageName
+  location: 'eastus'
   sku: {
-    name: 'Premium_LRS'
-    tier: 'Premium'
+    name: storageSKU
+  }
+  kind: 'StorageV2'
+  properties: {
+    supportsHttpsTrafficOnly: true
   }
 }
